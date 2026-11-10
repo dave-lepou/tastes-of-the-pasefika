@@ -1,11 +1,12 @@
 import * as Path from 'node:path'
-
+import recipesRoute from '../server/routes/recipes'
 import express from 'express'
 
 const server = express()
 server.use(express.json())
 
 // ADD YOUR API ROUTES HERE
+server.use('/api/v1/recipes', recipesRoute)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))

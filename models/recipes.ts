@@ -9,5 +9,5 @@ export interface RecipesData {
   category: string
   ingredients: Text
   instructions: Text
-  image_url: string
+  imageUrl: string
 }
