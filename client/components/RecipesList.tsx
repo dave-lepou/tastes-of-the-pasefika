@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getRecipes } from '../apis/recipes.ts'
+import { Link } from 'react-router'
 
 function BirdsList() {
   //use useQuery to fetch data
@@ -19,25 +20,28 @@ function BirdsList() {
   return (
     <>
       <header>
-        <h3>A collection of traditional Polynesian dishes</h3>
+        <h3>A collection of traditional Polynesian and Aotearoa dishes</h3>
       </header>
       <section>
         <ul>
           {recipes.map((recipe) => {
             return (
               <li key={recipe.id}>
-                <img
-                  src={recipe.imageUrl}
-                  alt={recipe.name}
-                  style={{
-                    width: '300px',
-                    height: '300px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                    flexShrink: 0,
-                  }}
-                />
-                <p>{recipe.country}</p>
+                <Link to={`/recipes/${recipe.id}`}>
+                  <img
+                    src={recipe.imageUrl}
+                    alt={recipe.name}
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                    }}
+                  />
+                  <p>
+                    {recipe.name} - {recipe.country}
+                  </p>
+                </Link>
               </li>
             )
           })}

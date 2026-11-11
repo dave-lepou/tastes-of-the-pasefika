@@ -1,13 +1,13 @@
-import RecipesList from './RecipesList'
+import { Outlet } from 'react-router'
 
 function App() {
   return (
     <>
-      <header className="header">
+      <header>
         <h1>Tastes of the Pasefika</h1>
       </header>
       <section className="main">
-        <RecipesList />
+        <Outlet />
       </section>
     </>
   )

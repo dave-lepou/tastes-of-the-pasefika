@@ -7,6 +7,7 @@ export async function seed(knex) {
   await knex('recipes').del()
   await knex('recipes').insert([
     {
+      id: '1',
       name: 'Koko Alaisa (Samoan Cocoa Rice)',
       country: 'Samoa',
       category: 'Breakfast / Comfort Food',
@@ -18,6 +19,7 @@ export async function seed(knex) {
         'https://www.pacificislandfoodrevolution.com/images/Koko-Alaisa.png?width=800&height=800&shrink=false',
     },
     {
+      id: '2',
       name: 'Māori Boil-up',
       country: 'Aotearoa New Zealand',
       category: 'Traditional Main',
@@ -29,6 +31,7 @@ export async function seed(knex) {
         'https://au-images.contentstack.com/v3/assets/blt49c8ba44aabcc4e3/blte34537d7ece75dbc/690bd7b551c68a304be48b0a/anikas-boil-up-600x400.jpg?width=360&height=360&fit=crop&format=webp&disable=upscale&dpr=1&quality=70&auto=webp',
     },
     {
+      id: '3',
       name: 'Lu Sipi (Tongan Baked Lamb in Coconut Cream)',
       country: 'Tonga',
       category: 'Traditional Main',
@@ -40,6 +43,7 @@ export async function seed(knex) {
         'https://i0.wp.com/pacificislandrecipe.com/wp-content/uploads/2026/04/lu-sipi-dish.webp?w=1024&ssl=1',
     },
     {
+      id: '4',
       name: 'Palusami',
       country: 'Samoa',
       category: 'Traditional Side / Main',
@@ -51,6 +55,7 @@ export async function seed(knex) {
         'https://www.levasaresort.com/blog/wp-content/uploads/2018/06/paulsami-lunch-le-vasa-resort.jpg',
     },
     {
+      id: '5',
       name: 'Mainese',
       country: 'Cook Islands (Rarotonga)',
       category: 'Side / Salad',
@@ -62,6 +67,7 @@ export async function seed(knex) {
         'https://images.squarespace-cdn.com/content/v1/618055acf887be52d1f24d8e/b9edb005-12ba-4054-b274-5c0ee2d710e6/mainese-pink-potato-salad-1500x1000.jpg?format=1000w',
     },
     {
+      id: '6',
       name: 'Pia Niue',
       country: 'Niue',
       category: 'Dessert',
@@ -73,6 +79,7 @@ export async function seed(knex) {
         'https://i0.wp.com/pacificislandrecipe.com/wp-content/uploads/2026/04/pitako-pia-dish.webp?w=1024&ssl=1',
     },
     {
+      id: '7',
       name: 'Oka',
       country: 'Samoa',
       category: 'Appetizer / Main',
@@ -84,6 +91,7 @@ export async function seed(knex) {
         'https://kokosamoa.co.nz/cdn/shop/articles/oka-recipe-history-tips-serving-ideas-the-koko-samoa-586861.jpg?v=1761728104&width=880',
     },
     {
+      id: '8',
       name: 'Sapasui',
       country: 'Samoa',
       category: 'Main',
@@ -95,6 +103,7 @@ export async function seed(knex) {
         'https://kokosamoa.co.nz/cdn/shop/articles/sapa-sui-recipe-history-tips-serving-ideas-the-koko-samoa-638982.jpg?v=1746547935&width=880',
     },
     {
+      id: '9',
       name: 'Kokoda',
       country: 'Fiji',
       category: 'Appetizer / Starter',
@@ -106,6 +115,7 @@ export async function seed(knex) {
         'https://www.crazy-cucumber.com/wp-content/uploads/2017/10/IMG_4424.jpg',
     },
     {
+      id: '10',
       name: 'Faikakai Topai',
       country: 'Tonga',
       category: 'Dessert',

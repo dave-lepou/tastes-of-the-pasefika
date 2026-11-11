@@ -7,7 +7,7 @@ export interface RecipesData {
   name: string
   country: string
   category: string
-  ingredients: Text
-  instructions: Text
+  ingredients: string
+  instructions: string
   imageUrl: string
 }
