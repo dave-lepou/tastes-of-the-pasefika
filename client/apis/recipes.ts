@@ -12,3 +12,8 @@ export async function getRecipesById(id: number): Promise<Recipes> {
   const res = await request.get(`${rootURL}/${id}`)
   return res.body
 }
+
+export async function addRecipe(newRecipe: RecipesData): Promise<Recipes> {
+  const res = await request.post(`${rootURL}/`).send(newRecipe)
+  return res.body
+}

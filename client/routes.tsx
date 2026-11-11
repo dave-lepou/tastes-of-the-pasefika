@@ -6,11 +6,13 @@ import {
 import App from './components/App'
 import RecipesList from './components/RecipesList'
 import RecipesDetail from './components/RecipesDetail'
+import AddRecipe from './components/AddRecipes'
 
 export const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
     <Route index element={<RecipesList />} />
     <Route path="recipes/:id" element={<RecipesDetail />} />
+    <Route path="recipes/new" element={<AddRecipe />} />
   </Route>,
 )
 

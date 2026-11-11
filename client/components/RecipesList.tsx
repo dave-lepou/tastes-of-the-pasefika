@@ -21,7 +21,9 @@ function BirdsList() {
     <>
       <header>
         <h3>A collection of traditional Polynesian and Aotearoa dishes</h3>
+        <Link to="/recipes/new">Add New Recipe</Link>
       </header>
+
       <section>
         <ul>
           {recipes.map((recipe) => {
