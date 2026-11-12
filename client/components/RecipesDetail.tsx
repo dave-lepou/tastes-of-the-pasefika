@@ -1,10 +1,7 @@
 import { useParams, Link } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getRecipesById } from '../apis/recipes.ts'
-
-//use useParams to connect to route path
-//use useQuery to detch the specific data handle loading / error states
-//(return) lay out my data how i want to display it
+import DeleteButton from './DeleteRecipe.tsx'
 
 export default function RecipesDetail() {
   const { id } = useParams()
@@ -16,7 +13,7 @@ export default function RecipesDetail() {
     error,
   } = useQuery({
     queryKey: ['recipe', id],
-    queryFn: () => getRecipesById(Number(id)), // 👈 Pass the ID to your API call
+    queryFn: () => getRecipesById(Number(id)),
   })
 
   if (isPending) return <p>Loading...</p>
@@ -25,7 +22,7 @@ export default function RecipesDetail() {
 
   return (
     <div>
-      <Link to="/">Back to List</Link>
+      <Link to="/">Home</Link>
 
       <div>
         <img
@@ -42,6 +39,7 @@ export default function RecipesDetail() {
         <p>
           {recipe.country} - {recipe.category}
         </p>
+        <DeleteButton id={recipe.id} />
       </div>
 
       <div>

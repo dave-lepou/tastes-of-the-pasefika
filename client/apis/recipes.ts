@@ -17,3 +17,7 @@ export async function addRecipe(newRecipe: RecipesData): Promise<Recipes> {
   const res = await request.post(`${rootURL}/`).send(newRecipe)
   return res.body
 }
+
+export async function deleteRecipe(id: number): Promise<void> {
+  await request.delete(`${rootURL}/${id}`)
+}

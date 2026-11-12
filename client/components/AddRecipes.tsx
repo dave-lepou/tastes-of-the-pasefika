@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { RecipesData } from '../../models/recipes.ts'
+import { addRecipe } from '../apis/recipes.ts'
 
 const emptyRecipe: RecipesData = {
   name: '',
