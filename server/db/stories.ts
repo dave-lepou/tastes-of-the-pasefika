@@ -22,12 +22,11 @@ export async function getStories() {
   return result as Stories[]
 }
 
-//Read stories by Recipe ID
-export async function getStoriesById(id: number) {
+//Read all stories belonging to a specific Recipe ID
+export async function getStoriesByRecipeId(recipeId: number) {
   const result = await db('stories')
     .select(...columns)
-    .where({ id })
-    .first()
+    .where({ recipe_id: recipeId })
   return result as Stories[]
 }
 
