@@ -49,7 +49,34 @@ router.post('/', async (req, res) => {
 // PATCH /api/v1/stories/:id
 router.patch('/:id', async (req, res) => {
   try {
-    const story = await db.updateStory(Number(req.params.id), req.body)
+    console.log('PATCH /stories/:id body received:', req.body) // Check your terminal to see what's sent!
+
+    let story
+    // Check various ways the frontend might send a reaction payload
+    const reactionKey =
+      req.body.reaction || req.body.type || Object.keys(req.body)[0]
+
+    const validReactions = [
+      'samoa',
+      'tonga',
+      'fiji',
+      'rarotonga',
+      'niue',
+      'samoaReactions',
+      'tongaReactions',
+      'fijiReactions',
+      'rarotongaReactions',
+      'niueReactions',
+    ]
+
+    if (reactionKey && validReactions.includes(reactionKey)) {
+      // Normalize key (e.g. 'samoaReactions' -> 'samoa')
+      const normalized = reactionKey.replace('Reactions', '').toLowerCase()
+      story = await db.updateStoryReaction(Number(req.params.id), normalized)
+    } else {
+      story = await db.updateStory(Number(req.params.id), req.body)
+    }
+
     if (!story) {
       res.sendStatus(404)
       return

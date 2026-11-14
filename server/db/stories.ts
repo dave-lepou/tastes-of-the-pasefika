@@ -18,7 +18,6 @@ const columns = [
 //Handle CRUD Operations (Stories)
 export async function getStories() {
   const result = await db('stories').select(...columns)
-  console.log(result)
   return result as Stories[]
 }
 
@@ -49,7 +48,7 @@ export async function deleteStory(id: number) {
   return await db('stories').where({ id }).delete()
 }
 
-//UPDATE
+//UPDATE Story details
 export async function updateStory(id: number, data: Partial<StoriesData>) {
   const [story] = await db('stories')
     .where({ id })
@@ -61,5 +60,30 @@ export async function updateStory(id: number, data: Partial<StoriesData>) {
       image_url: data.imageUrl,
     })
     .returning(columns)
+  return story as Stories
+}
+
+//UPDATE / INCREMENT Reactions
+export async function updateStoryReaction(id: number, reactionField: string) {
+  // Map friendly frontend keys to exact database snake_case columns
+  const columnMap: Record<string, string> = {
+    samoa: 'samoa_reactions',
+    tonga: 'tonga_reactions',
+    fiji: 'fiji_reactions',
+    rarotonga: 'rarotonga_reactions',
+    niue: 'niue_reactions',
+  }
+
+  const dbColumn = columnMap[reactionField]
+  if (!dbColumn) {
+    throw new Error('Invalid reaction type')
+  }
+
+  await db('stories').where({ id }).increment(dbColumn, 1)
+
+  // Fetch and return the updated story row
+  const [story] = await db('stories')
+    .select(...columns)
+    .where({ id })
   return story as Stories
 }

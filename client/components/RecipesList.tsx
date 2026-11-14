@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getRecipes } from '../apis/recipes.ts'
 import { Link } from 'react-router'
 
-function BirdsList() {
+function RecipesList() {
   //use useQuery to fetch data
   const {
     data: recipes,
@@ -17,6 +17,9 @@ function BirdsList() {
   if (isPending) return <p>Loading...</p>
   if (isError) return <p>Error... {error.message}</p>
 
+  //fallback safety array
+  const recipeList = recipes ?? []
+
   return (
     <>
       <header>
@@ -26,7 +29,7 @@ function BirdsList() {
 
       <section>
         <ul>
-          {recipes.map((recipe) => {
+          {recipeList.map((recipe) => {
             return (
               <li key={recipe.id}>
                 <Link to={`/recipes/${recipe.id}`}>
@@ -53,4 +56,4 @@ function BirdsList() {
   )
 }
 
-export default BirdsList
+export default RecipesList
