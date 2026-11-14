@@ -15,7 +15,7 @@ const columns = [
 //(Read ALL)
 export async function getRecipes() {
   const result = await db('recipes').select(...columns)
-  console.log(result)
+  //console.log(result)
   return result as Recipes[]
 }
 
