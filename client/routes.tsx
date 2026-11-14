@@ -9,6 +9,7 @@ import RecipesDetail from './components/RecipesDetail'
 import AddRecipe from './components/AddRecipes'
 import Home from './components/Home'
 import AboutPage from './components/AboutPage'
+import StoriesList from './components/StoriesList'
 
 export const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
@@ -17,6 +18,7 @@ export const routes = createRoutesFromElements(
     <Route path="recipes" element={<RecipesList />} />
     <Route path="recipes/:id" element={<RecipesDetail />} />
     <Route path="recipes/new" element={<AddRecipe />} />
+    <Route path="stories" element={<StoriesList />} />
   </Route>,
 )
 

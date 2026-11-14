@@ -7,6 +7,7 @@ export default function NavBar() {
       <Link to="/about">About</Link>
       <Link to="/recipes">Recipes</Link>
       <Link to="/recipes/new">Add your recipe</Link>
+      <Link to="stories">Stories from the Pasefika</Link>
     </nav>
   )
 }
