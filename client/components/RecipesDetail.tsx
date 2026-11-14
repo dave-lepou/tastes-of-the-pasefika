@@ -3,8 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getRecipesById } from '../apis/recipes.ts'
 import { getStoriesByRecipeId, updateStory } from '../apis/stories.ts'
 import DeleteButton from './DeleteRecipe.tsx'
+import AddStory from './AddStory.tsx'
+import { Stories } from '../../models/stories.ts'
 
-//add features for adding stories to recipes / add reaction buttons to stories and counter
 export default function RecipesDetail() {
   const { id } = useParams()
   const recipeId = Number(id)
@@ -20,13 +21,13 @@ export default function RecipesDetail() {
     queryFn: () => getRecipesById(Number(id)),
   })
 
-  //grab all stories linked to this recipe
+  // grab all stories linked to this recipe
   const { data: stories, isPending: storiesPending } = useQuery({
     queryKey: ['stories', recipeId],
     queryFn: () => getStoriesByRecipeId(recipeId),
   })
 
-  // Mutation for handling Pacific nation flag reactions
+  // Mutation for handling story reactions
   const reactionMutation = useMutation({
     mutationFn: async (variables: {
       storyId: number
@@ -39,13 +40,21 @@ export default function RecipesDetail() {
     },
   })
 
-  //Handle clicking a flag reaction button
+  // Handle clicking a story flag reaction button
   const handleReaction = (
-    story: any,
+    story: Stories,
     nation: 'samoa' | 'tonga' | 'fiji' | 'rarotonga' | 'niue',
   ) => {
+    const counts = {
+      samoa: story.samoaReactions,
+      tonga: story.tongaReactions,
+      fiji: story.fijiReactions,
+      rarotonga: story.rarotongaReactions,
+      niue: story.niueReactions,
+    }
+
     const key = `${nation}Reactions`
-    const currentCount = Number(story[key]) || 0
+    const currentCount = Number(counts[nation]) || 0
 
     reactionMutation.mutate({
       storyId: story.id,
@@ -55,112 +64,141 @@ export default function RecipesDetail() {
     })
   }
 
-  if (isPending) return <p>Loading...</p>
-  if (isError) return <p>Error... {error.message}</p>
-  if (!recipe) return <p>Sorry recipe not found!</p>
+  if (isPending) return <p className="loading-state">Loading...</p>
+  if (isError) return <p className="error-state">Error... {error.message}</p>
+  if (!recipe) return <p className="error-state">Sorry recipe not found!</p>
 
   return (
-    <div>
-      <Link to="/">Home</Link>
+    <div className="recipe-detail-wrapper">
+      <Link to="/" className="back-home-link">
+        ← Back to Home
+      </Link>
 
-      <div>
+      {/* Header Section (Side-by-side photo and title info) */}
+      <div className="recipe-hero-section">
         <img
           src={recipe.imageUrl}
           alt={recipe.name}
-          style={{
-            width: '300px',
-            height: '300px',
-            objectFit: 'cover',
-            borderRadius: '50%',
-          }}
+          className="recipe-detail-img"
         />
-        <h2>{recipe.name}</h2>
-        <p>
-          {recipe.country} - {recipe.category}
-        </p>
-        <DeleteButton id={recipe.id} />
+        <div className="recipe-hero-info">
+          <h2>{recipe.name}</h2>
+          <p className="recipe-meta">
+            {recipe.country} • {recipe.category}
+          </p>
+
+          {/* Recipe Reaction Buttons */}
+          <div
+            className="reaction-buttons-container"
+            style={{ margin: '0.5rem 0 1rem 0' }}
+          >
+            <span
+              style={{
+                fontSize: '0.9rem',
+                color: 'var(--pasa-text-muted)',
+                alignSelf: 'center',
+              }}
+            >
+              Show some love from:
+            </span>
+            <button className="reaction-btn">🇼🇸</button>
+            <button className="reaction-btn">🇹🇴</button>
+            <button className="reaction-btn">🇫🇯</button>
+            <button className="reaction-btn">🇨🇰</button>
+            <button className="reaction-btn">🇳🇺</button>
+          </div>
+
+          <DeleteButton id={recipe.id} />
+        </div>
       </div>
 
-      <div>
-        <h3>Ingredients</h3>
-        <p>{recipe.ingredients}</p>
+      {/* Recipe Content Section */}
+      <div className="recipe-content-grid">
+        <div className="recipe-section-box">
+          <h3>Ingredients</h3>
+          <p>{recipe.ingredients}</p>
+        </div>
+
+        <div className="recipe-section-box">
+          <h3>Instructions</h3>
+          <p>{recipe.instructions}</p>
+        </div>
       </div>
 
-      <div>
-        <h3>Instructions</h3>
-        <p>{recipe.instructions}</p>
-      </div>
+      <hr className="pasa-divider" />
 
-      <hr style={{ margin: '2rem 0' }} />
-
-      {/* --- COMMUNITY STORIES SECTION --- */}
-      <section>
+      {/* Community Stories & Memories Section */}
+      <section className="community-stories-section">
         <h3>Community Stories & Memories</h3>
 
         {storiesPending && <p>Loading stories...</p>}
 
         {stories && stories.length === 0 && (
-          <p>
+          <p
+            style={{ color: 'var(--pasa-text-muted)', marginBottom: '1.5rem' }}
+          >
             No stories shared for this recipe yet. Be the first to share your
-            memory!
+            memory below!
           </p>
         )}
 
-        {stories &&
-          stories.map((story) => (
-            <div
-              key={story.id}
-              style={{
-                border: '1px solid #ddd',
-                padding: '1rem',
-                borderRadius: '8px',
-                marginBottom: '1rem',
-              }}
-            >
-              <p>
-                <strong>{story.name}</strong> from <em>{story.country}</em>
-              </p>
-              <p>{story.story}</p>
-              {story.imageUrl && (
-                <img
-                  src={story.imageUrl}
-                  alt={story.name}
-                  style={{
-                    width: '150px',
-                    height: '150px',
-                    objectFit: 'cover',
-                    borderRadius: '4px',
-                  }}
-                />
-              )}
+        {/* Stories Grid */}
+        <div className="stories-grid">
+          {stories &&
+            stories.map((story) => (
+              <div key={story.id} className="story-card">
+                <p className="story-author">
+                  <strong>{story.name}</strong> from <em>{story.country}</em>
+                </p>
+                <p className="story-text">&ldquo;{story.story}&rdquo;</p>
 
-              {/* Pacific Nation Flag Reaction Buttons */}
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '0.75rem',
-                  marginTop: '1rem',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <button onClick={() => handleReaction(story, 'samoa')}>
-                  🇼🇸 ({story.samoaReactions})
-                </button>
-                <button onClick={() => handleReaction(story, 'tonga')}>
-                  🇹🇴 ({story.tongaReactions})
-                </button>
-                <button onClick={() => handleReaction(story, 'fiji')}>
-                  🇫🇯 ({story.fijiReactions})
-                </button>
-                <button onClick={() => handleReaction(story, 'rarotonga')}>
-                  🇨🇰 ({story.rarotongaReactions})
-                </button>
-                <button onClick={() => handleReaction(story, 'niue')}>
-                  🇳🇺 ({story.niueReactions})
-                </button>
+                {story.imageUrl && (
+                  <img
+                    src={story.imageUrl}
+                    alt={story.name}
+                    className="story-image"
+                  />
+                )}
+
+                {/* Pasefika Flag Reaction Buttons for Stories */}
+                <div className="reaction-buttons-container">
+                  <button
+                    className="reaction-btn"
+                    onClick={() => handleReaction(story, 'samoa')}
+                  >
+                    🇼🇸 <span>{story.samoaReactions}</span>
+                  </button>
+                  <button
+                    className="reaction-btn"
+                    onClick={() => handleReaction(story, 'tonga')}
+                  >
+                    🇹🇴 <span>{story.tongaReactions}</span>
+                  </button>
+                  <button
+                    className="reaction-btn"
+                    onClick={() => handleReaction(story, 'fiji')}
+                  >
+                    🇫🇯 <span>{story.fijiReactions}</span>
+                  </button>
+                  <button
+                    className="reaction-btn"
+                    onClick={() => handleReaction(story, 'rarotonga')}
+                  >
+                    🇨🇰 <span>{story.rarotongaReactions}</span>
+                  </button>
+                  <button
+                    className="reaction-btn"
+                    onClick={() => handleReaction(story, 'niue')}
+                  >
+                    🇳🇺 <span>{story.niueReactions}</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
+
+        {/* Add Story Toggle Button & Form placed cleanly below the stories */}
+        <AddStory recipeId={recipeId} />
       </section>
     </div>
   )

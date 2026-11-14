@@ -3,7 +3,6 @@ import { getRecipes } from '../apis/recipes.ts'
 import { Link } from 'react-router'
 
 function RecipesList() {
-  //use useQuery to fetch data
   const {
     data: recipes,
     isPending,
@@ -14,45 +13,40 @@ function RecipesList() {
     queryFn: () => getRecipes(),
   })
 
-  if (isPending) return <p>Loading...</p>
-  if (isError) return <p>Error... {error.message}</p>
+  if (isPending) return <p className="loading-state">Loading...</p>
+  if (isError) return <p className="error-state">Error... {error.message}</p>
 
-  //fallback safety array
   const recipeList = recipes ?? []
 
   return (
-    <>
-      <header>
-        <h3>A collection of traditional Polynesian and Aotearoa dishes</h3>
-        <Link to="/recipes/new">Add New Recipe</Link>
+    <div className="recipes-container">
+      <header className="recipes-header">
+        <h3>A collection of traditional Polynesian dishes</h3>
+        <Link to="/recipes/new" className="add-recipe-link">
+          + Add New Recipe
+        </Link>
       </header>
 
       <section>
-        <ul>
+        <ul className="recipe-grid-list">
           {recipeList.map((recipe) => {
             return (
-              <li key={recipe.id}>
-                <Link to={`/recipes/${recipe.id}`}>
+              <li key={recipe.id} className="recipe-card">
+                <Link to={`/recipes/${recipe.id}`} className="recipe-card-link">
                   <img
                     src={recipe.imageUrl}
                     alt={recipe.name}
-                    style={{
-                      width: '300px',
-                      height: '300px',
-                      objectFit: 'cover',
-                      borderRadius: '50%',
-                    }}
+                    className="recipe-card-img"
                   />
-                  <p>
-                    {recipe.name} - {recipe.country}
-                  </p>
+                  <h3>{recipe.name}</h3>
+                  <p className="recipe-card-country">{recipe.country}</p>
                 </Link>
               </li>
             )
           })}
         </ul>
       </section>
-    </>
+    </div>
   )
 }
 

@@ -1,8 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --pasa-charcoal: #121619; /* Deep dark charcoal background */
+  --pasa-card-dark: #1e242b; /* Slightly lighter card background */
+  --pasa-nav-bg: #28303b; /* Lighter charcoal/slate for the nav bar */
+  --pasa-sand: #f0ead6; /* Warm bone/sand text and accents */
+  --pasa-gold: #d4af37; /* Warm traditional accent gold */
+  --pasa-text-muted: #9aa5b1;
+}
+
 body {
-  position: absolute;
-  top: 0;
-  left: 0;
+  background-color: var(--pasa-charcoal);
+  color: var(--pasa-sand);
+  font-family:
+    'Plus Jakarta Sans',
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
   margin: 0;
-  padding: 20px;
-  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Header & Navigation Bar */
+header {
+  background: var(--pasa-nav-bg);
+  color: var(--pasa-sand);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+header h1,
+header h3 {
+  color: var(--pasa-sand);
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+header h1 {
+  font-size: 2.2rem;
+}
+
+header h3 {
+  font-size: 1rem;
+  color: var(--pasa-text-muted);
+}
+
+header nav {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+header nav a {
+  color: var(--pasa-sand);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+}
+
+header nav a:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--pasa-gold);
+}
+
+/* Main Layout */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* Typography Enhancements */
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+p,
+a,
+span,
+label,
+input,
+textarea,
+select {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Container for Detail View / About Section */
+.recipe-detail-container,
+.about-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+  background: var(--pasa-card-dark);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Recipes Detail Page Styles */
+.recipe-detail-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.back-home-link {
+  color: var(--pasa-gold, #d4af37);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 2rem;
+  transition: opacity 0.2s;
+}
+
+.back-home-link:hover {
+  opacity: 0.8;
+}
+
+.recipe-hero-section {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background: var(--pasa-card-dark);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2.5rem;
+}
+
+.recipe-detail-img {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 3px solid var(--pasa-gold, #d4af37);
+}
+
+.recipe-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.recipe-hero-info h2 {
+  font-size: 2.2rem;
+  margin: 0;
+  color: var(--pasa-sand);
+}
+
+.recipe-meta {
+  color: var(--pasa-text-muted);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+}
+
+.recipe-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.recipe-section-box {
+  background: var(--pasa-card-dark);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+}
+
+.recipe-section-box h3 {
+  color: var(--pasa-gold);
+  margin-top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.5rem;
+}
+
+.pasa-divider {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 3rem 0;
+}
+
+/* Recipes Home Page Grid Layout */
+.recipes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.recipes-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.add-recipe-link {
+  color: var(--pasa-gold);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 0.75rem;
+  transition: opacity 0.2s;
+}
+
+.add-recipe-link:hover {
+  opacity: 0.8;
+}
+
+.recipe-grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recipe-card {
+  background: var(--pasa-card-dark);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.recipe-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.recipe-card-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+  border: 3px solid var(--pasa-gold);
+}
+
+.recipe-card h3 {
+  color: var(--pasa-sand);
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.recipe-card-country {
+  color: var(--pasa-text-muted);
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Centered Community Stories & Cards */
+.community-stories-section {
+  text-align: center;
+}
+
+.community-stories-section h3 {
+  text-align: center;
+  color: var(--pasa-sand);
+}
+
+.stories-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.story-card {
+  background: var(--pasa-card-dark);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-author {
+  color: var(--pasa-text-muted);
+  margin-top: 0;
+  text-align: center;
+}
+
+.story-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 1rem 0;
+  text-align: center;
+  color: #fff9e6;
+  font-weight: 400;
+}
+
+.story-image {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0.5rem 0 1rem 0;
+  border: 3px solid var(--pasa-gold);
+}
+
+.reaction-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.reaction-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--pasa-sand);
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.reaction-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--pasa-gold);
+  transform: translateY(-2px);
+}
+
+/* Responsive Grid Fallbacks */
+@media (max-width: 900px) {
+  .recipe-grid-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .recipe-grid-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Add Recipe Page Styles --- */
+.add-recipe-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.add-recipe-card {
+  background: var(--pasa-card-dark, #1e242b);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.add-recipe-card h2 {
+  color: var(--pasa-sand, #f0ead6);
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.add-recipe-subtitle {
+  color: var(--pasa-text-muted, #9aa5b1);
+  margin-bottom: 2rem;
+}
+
+.add-recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: var(--pasa-sand, #f0ead6);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--pasa-sand, #f0ead6);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--pasa-gold, #d4af37);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.submit-recipe-btn {
+  background: var(--pasa-gold, #d4af37);
+  color: var(--pasa-charcoal, #121619);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
+  margin-top: 1rem;
+}
+
+.submit-recipe-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.submit-recipe-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
