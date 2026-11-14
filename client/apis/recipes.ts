@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Recipes } from '../../models/recipes.ts'
+import { Recipes, RecipesData } from '../../models/recipes.ts'
 
 const rootURL = new URL('api/v1/recipes', document.baseURI)
 
@@ -20,4 +20,14 @@ export async function addRecipe(newRecipe: RecipesData): Promise<Recipes> {
 
 export async function deleteRecipe(id: number): Promise<void> {
   await request.delete(`${rootURL}/${id}`)
+}
+
+export async function updateRecipeReactions(
+  id: number,
+  updatedReactions: Record<string, number>,
+) {
+  const response = await request
+    .patch(`/api/v1/recipes/${id}`)
+    .send(updatedReactions)
+  return response.body
 }

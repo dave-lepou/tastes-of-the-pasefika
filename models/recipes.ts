@@ -10,4 +10,9 @@ export interface RecipesData {
   ingredients: string
   instructions: string
   imageUrl: string
+  samoaReactions: number
+  tongaReactions: number
+  fijiReactions: number
+  rarotongaReactions: number
+  niueReactions: number
 }

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router' // 👈 Added
+import { useNavigate } from 'react-router'
 import { deleteRecipe } from '../apis/recipes.ts'
 
 interface Props {
@@ -8,13 +8,13 @@ interface Props {
 
 export default function DeleteRecipe({ id }: Props) {
   const qc = useQueryClient()
-  const navigate = useNavigate() // 👈 Added
+  const navigate = useNavigate()
 
   const deleteMutation = useMutation({
     mutationFn: () => deleteRecipe(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['recipes'] })
-      navigate('/') // 👈 Added to redirect home after deletion
+      navigate('/')
     },
   })
 
@@ -25,7 +25,11 @@ export default function DeleteRecipe({ id }: Props) {
 
   return (
     <>
-      <button onClick={handleDelete} disabled={deleteMutation.isPending}>
+      <button
+        onClick={handleDelete}
+        disabled={deleteMutation.isPending}
+        className="pasa-delete-btn"
+      >
         {deleteMutation.isPending ? 'Deleting...' : 'Delete Recipe'}
       </button>
     </>

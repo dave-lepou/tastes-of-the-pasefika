@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { getRecipesById } from '../apis/recipes.ts'
+import { getRecipesById, updateRecipeReactions } from '../apis/recipes.ts'
 import { getStoriesByRecipeId, updateStory } from '../apis/stories.ts'
 import DeleteButton from './DeleteRecipe.tsx'
 import AddStory from './AddStory.tsx'
@@ -26,6 +26,38 @@ export default function RecipesDetail() {
     queryKey: ['stories', recipeId],
     queryFn: () => getStoriesByRecipeId(recipeId),
   })
+
+  // Mutation for handling recipe reactions
+  const recipeReactionMutation = useMutation({
+    mutationFn: async (updatedReactions: Record<string, number>) => {
+      return await updateRecipeReactions(recipeId, updatedReactions)
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['recipe', id] })
+    },
+  })
+
+  // Handle clicking a recipe flag reaction button
+  const handleRecipeReaction = (
+    nation: 'samoa' | 'tonga' | 'fiji' | 'rarotonga' | 'niue',
+  ) => {
+    if (!recipe) return
+
+    const counts = {
+      samoa: recipe.samoaReactions,
+      tonga: recipe.tongaReactions,
+      fiji: recipe.fijiReactions,
+      rarotonga: recipe.rarotongaReactions,
+      niue: recipe.niueReactions,
+    }
+
+    const key = `${nation}Reactions`
+    const currentCount = Number(counts[nation]) || 0
+
+    recipeReactionMutation.mutate({
+      [key]: currentCount + 1,
+    })
+  }
 
   // Mutation for handling story reactions
   const reactionMutation = useMutation({
@@ -101,11 +133,36 @@ export default function RecipesDetail() {
             >
               Show some love from:
             </span>
-            <button className="reaction-btn">🇼🇸</button>
-            <button className="reaction-btn">🇹🇴</button>
-            <button className="reaction-btn">🇫🇯</button>
-            <button className="reaction-btn">🇨🇰</button>
-            <button className="reaction-btn">🇳🇺</button>
+            <button
+              className="reaction-btn"
+              onClick={() => handleRecipeReaction('samoa')}
+            >
+              🇼🇸 <span>{recipe.samoaReactions}</span>
+            </button>
+            <button
+              className="reaction-btn"
+              onClick={() => handleRecipeReaction('tonga')}
+            >
+              🇹🇴 <span>{recipe.tongaReactions}</span>
+            </button>
+            <button
+              className="reaction-btn"
+              onClick={() => handleRecipeReaction('fiji')}
+            >
+              🇫🇯 <span>{recipe.fijiReactions}</span>
+            </button>
+            <button
+              className="reaction-btn"
+              onClick={() => handleRecipeReaction('rarotonga')}
+            >
+              🇨🇰 <span>{recipe.rarotongaReactions}</span>
+            </button>
+            <button
+              className="reaction-btn"
+              onClick={() => handleRecipeReaction('niue')}
+            >
+              🇳🇺 <span>{recipe.niueReactions}</span>
+            </button>
           </div>
 
           <DeleteButton id={recipe.id} />
