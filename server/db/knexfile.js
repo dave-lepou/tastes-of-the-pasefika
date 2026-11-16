@@ -37,14 +37,13 @@ export default {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      // Use a local file path so Render can successfully write/read it
-      filename: Path.join(__dirname, 'prod.sqlite3'),
+      filename: Path.join(process.cwd(), 'server/db/prod.sqlite3'),
     },
     migrations: {
-      directory: Path.join(__dirname, 'migrations'),
+      directory: Path.join(process.cwd(), 'server/db/migrations'),
     },
     seeds: {
-      directory: Path.join(__dirname, 'seeds'),
+      directory: Path.join(process.cwd(), 'server/db/seeds'),
     },
     pool: {
       afterCreate: (conn, cb) => conn.run('PRAGMA foreign_keys = ON', cb),
