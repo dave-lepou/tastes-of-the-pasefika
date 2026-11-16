@@ -8,7 +8,6 @@ async function startServer() {
     if (process.env.NODE_ENV === 'production') {
       console.log('Running database migrations for production...')
       await db.migrate.latest()
-      await db.seed.run()
     }
 
     server.listen(PORT, () => {
